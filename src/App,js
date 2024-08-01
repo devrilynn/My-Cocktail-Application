@@ -1,0 +1,26 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import Login from './Login';
+import Register from './Register';
+import Recipes from './Recipes';
+import RecipeDetails from './RecipeDetails';
+import './App.css';
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/RecipeDetails/:id" element={<RecipeDetails />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
