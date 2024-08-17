@@ -1,0 +1,91 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.filter-button {
+  background-color: #1E506E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center; 
+}
+
+.filter-button:hover {
+  background-color: #16394f;
+}
+
+.search-button {
+  background-color: #1E506E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.search-button:hover {
+  background-color: #16394f;
+}
+
+.filter-button:focus, .search-button:focus {
+  outline: none;
+}
+
+.available-ingredients {
+  width: 30%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: left;
+  margin-left: 190px; 
+}
+
+.selected-ingredients {
+  width: 30%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: left; 
+  margin-right: 190px;
+}
+
+.filter-container h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.filter-container ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 200px; 
+  overflow-y: auto;
+}
+
+.filter-container li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-container li:hover {
+  background-color: #f0f0f0;
+}
+
+.remove-ingredient {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
