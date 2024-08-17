@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import './Login.css';
 
+// Login component that handles user authentication
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -12,33 +13,41 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Update formData state based on input changes
+  // Handle changes to input fields
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = formData;
+  e.preventDefault();
+  const { email, password } = formData;
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        email,
-        password
-      });
-      alert(response.data);
-      navigate('/');              // If user logs in successfully, take to the home page
-    } catch (err) {
-      setError(err.response.data || 'An error occurred');
-    }
-  };
+  try {
+    const response = await axios.post('http://localhost:5000/api/login', {
+      email,
+      password,
+    });
+
+    const { id, firstName } = response.data.user;
+    const user = {
+      id,
+      firstName,
+    };
+    
+    sessionStorage.setItem('user', JSON.stringify(user));
+
+    navigate('/'); 
+  } catch (err) {
+    setError(err.response?.data?.message || 'An error occurred');
+  }
+};
 
   return (
     <div>
       <NavBar />
       <div className="login-container">
-      <h1>Hello</h1>
-      <p>Sign in to ElixirMixer</p>
+        <h1>Hello</h1>
+        <p>Sign in to ElixirMixer</p>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
