@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Masonry from 'react-masonry-css';
+import { fetchAllIngredients } from './IngredientsApi';
 import './Recipes.css';
 
+// Function to handle the images of ingredients
 const IngredientThumbnails = ({ onIngredientSelect }) => {
-    // State that stores the ingredients
     const [ingredients, setIngredients] = useState([]);
-    
+    const [heights, setHeights] = useState({});
+
     useEffect(() => {
-        const fetchIngredients = async () => {
-            try {
-                const response = await axios.get('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
-                setIngredients(response.data.drinks);
-            } catch (error) {
-                console.error('Failed to fetch ingredients', error);
-            }
-        };
-        fetchIngredients();
+        fetchAllIngredients((ingredientsData) => {
+            setIngredients(ingredientsData);
+
+            const generatedHeights = {};
+            ingredientsData.forEach(ingredient => {
+                generatedHeights[ingredient._id] = getRandomHeight();
+            });
+            setHeights(generatedHeights);
+        });
     }, []);
-  
+
+    // Function to define the columns for the masonry layout
     const breakpointColumnsObj = {
         default: 4,
         1100: 3,
@@ -26,14 +28,14 @@ const IngredientThumbnails = ({ onIngredientSelect }) => {
         500: 1
     };
 
-    // Set random sizes for thumbnails
+    // Function to create random heights for masonry layout
     const getRandomHeight = () => {
-        const heights = ['200px', '250px', '300px', '350px', '400px'];
+        const heights = ['300px', '350px', '400px'];
         return heights[Math.floor(Math.random() * heights.length)];
     };
 
     const handleClick = (ingredient) => {
-        onIngredientSelect(ingredient);
+        onIngredientSelect(ingredient.name);
     };
 
     return (
@@ -45,17 +47,17 @@ const IngredientThumbnails = ({ onIngredientSelect }) => {
             >
                 {ingredients.map(ingredient => (
                     <div 
-                        key={ingredient.strIngredient1} 
-                        onClick={() => handleClick(ingredient.strIngredient1)}  
+                        key={ingredient._id}  
+                        onClick={() => handleClick(ingredient)}  
                         className="masonry-grid_item"
-                        style={{ height: getRandomHeight() }}
+                        style={{ height: heights[ingredient._id] }}  
                     >
                         <img
-                            src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Medium.png`}
-                            alt={ingredient.strIngredient1}
+                            src={ingredient.image}  
+                            alt={ingredient.name}
                             className="ingredient-image"
                         />
-                        <p>{ingredient.strIngredient1}</p>
+                        <p>{ingredient.name}</p>
                     </div>
                 ))}
             </Masonry>
