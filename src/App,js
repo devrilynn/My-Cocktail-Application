@@ -5,6 +5,7 @@ import Login from './Login';
 import Register from './Register';
 import Recipes from './Recipes';
 import RecipeDetails from './RecipeDetails';
+import SavedRecipes from './SavedRecipes';
 import './App.css';
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/recipes" element={<Recipes />} />
-          <Route path="/RecipeDetails/:id" element={<RecipeDetails />} />
+          <Route path="/recipe-details/:id" element={<RecipeDetails />} />
+          <Route path="/saved-recipes" element={<SavedRecipes />} />
         </Routes>
       </div>
     </Router>
