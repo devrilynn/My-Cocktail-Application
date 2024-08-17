@@ -4,10 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import NavBar from './NavBar';
 import './Register.css'; 
 
+// Register Component
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    dateOfBirth: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -21,7 +23,23 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, confirmPassword } = formData;
+    const { firstName, lastName, dateOfBirth, email, password, confirmPassword } = formData;
+
+     // Calculate the age of the user
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // Adjust the age if the birth date hasn't occurred yet this year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    if (age < 21) {
+      setError('You must be at least 21 years old to register.');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -29,17 +47,18 @@ const Register = () => {
     }
 
     try {
-      // API request to register the user
       const response = await axios.post('http://localhost:5000/api/register', {
         firstName,
         lastName,
+        dateOfBirth,
         email,
         password
       });                       
-      alert(response.data);
-      navigate('/');
+      alert(response.data.message);  
+      navigate('/login');
     } catch (err) {
-      setError(err.response.data || 'An error occurred');
+      // Ensure that error is always a string
+      setError(err.response?.data?.message || 'An error occurred');
     }
   };
 
@@ -48,7 +67,7 @@ const Register = () => {
       <NavBar />
       <div className="register-container">
         <h1>Create an ElixirMixer Account</h1>
-        <p>Fill out the details below to get started.</p>
+        <p>Fill out the details below to start saving cocktails.</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
