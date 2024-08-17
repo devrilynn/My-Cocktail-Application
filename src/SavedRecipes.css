@@ -1,0 +1,52 @@
+.saved-recipes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+
+}
+
+.saved-recipes-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.recipe-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+  cursor: pointer;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.recipe-card h3 {
+  font-size: 1.25rem;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+.recipe-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.saved-recipes-header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
